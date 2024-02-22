@@ -1,0 +1,26 @@
+{
+    "name": "DjangoPlayground",
+    "version": "0.0.1",
+    "description": "My django playground to test and develop in.",
+    "homepage": "https://www.github.com/",
+    "author": "AlexGriffithsUOL on github, Alexander John Griffiths",
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "": ""
+    },
+    "bugs": {
+        "url": "https://github.com/owner/project/issues",
+        "email": "project@hostname.com"
+    },
+    "devDependencies": {
+        "gulp": "^4.0.2"
+    },
+    "dependencies": {},
+    "engines": {
+        "node": "21.5.0"
+    },
+    "scripts": {
+        "build": "gulp dist --production"
+    }
+}
