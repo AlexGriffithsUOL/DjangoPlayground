@@ -10,11 +10,95 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
+import environ
+import sys
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+env = environ.Env(
+    DEBUG=(bool, False),
+    IN_TEST=(bool, False),
+)
+
+environ.Env.read_env()
+
+ENV_NAME = env('ENV_NAME', default='LOCAL')
 BASE_DIR = Path(__file__).resolve().parent.parent
+SECRET_KEY = env('SECRET_KEY')
+DEBUG = env('DEBUG')
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+INTERNAL_IPS = ['127.0.0.1']
+SITE_TITLE = env('SITE_TITLE')
+DOMAIN = env('DOMAIN')
+URL_BASE = env('URL_BASE')
 
+ADMINS = [('Admin', 'admin@admin.com')]
+
+SESSION_COOKIE_SECURE = env('SESSION_COOKIE_SECURE', cast=bool, default=True)
+CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE', cast=bool, default=True)
+
+ROOT_URLCONF = "base.urls"
+
+#Keys and that
+GOOGLE_API_KEY = os.environ['API_KEY']
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.2/howto/static-files/
+
+STATIC_URL = "static/"
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+CSRF_COOKIE_SAMESITE = None
+SESSION_COOKIE_SAMESITE = None
+SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
+
+if ENV_NAME == 'LOCAL':
+    MY_CONNECTION_POOL_KWARGS = {
+    }
+else:
+    MY_CONNECTION_POOL_KWARGS = {
+        'ssl_cert_reqs': None
+    }
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': env('REDIS_URL'),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'CONNECTION_POOL_KWARGS': MY_CONNECTION_POOL_KWARGS
+            }
+
+    }
+}  
+
+RQ_QUEUES = {
+    'default': {
+        'USE_REDIS_CACHE': 'default'
+    },
+    'tester': {
+        'USE_REDIS_CACHE': 'default'
+    },
+}
+
+# AUTH_USER_MODEL = 'accounts.User'
+LOGIN_URL = 'core:index'
+LOGIN_REDIRECT_URL = 'core:index'
+LOGOUT_REDIRECT_URL = LOGIN_URL
+
+OTP_TOTP_ISSUER = env('SITE_TITLE')
+
+for queueConfig in RQ_QUEUES.values():
+    queueConfig['ASYNC'] = env('RQ_ASYNC', cast=bool, default=True)
+
+NAME = env('NAME')
+
+HEROKU_APP_NAME=env('HEROKU_APP_NAME')
+HEROKU_API_BASE=env('HEROKU_API_BASE')
+HEROKU_API_KEY=env('HEROKU_API_KEY')
+
+IN_TEST = env('IN_TEST') or 'test' in sys.argv
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -37,6 +121,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    # Added modules
+    "core",
+
+    # Installed apps, extra
 ]
 
 MIDDLEWARE = [
