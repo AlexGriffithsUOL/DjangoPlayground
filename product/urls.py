@@ -1,11 +1,10 @@
 from django.contrib import admin
 from django.urls import path, include
 
-# Personal views
 from . import views
 
-app_name = "core"
+app_name = "product"
 
 urlpatterns = [
-    path("index", view=views.index_view.as_view(), name="idx")
+    path("detail", view=views.product_detail_view.as_view(), name="detail")
 ]

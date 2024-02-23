@@ -1,0 +1,18 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+<div class="h-svh bg-gray-300 dark:bg-gray-800 text-black dark:text-gray-200 pt-5 pb-5 flex justify-center">
+  <div class="w-full min-h-96 dark:bg-gray-900 bg-white lg:md:w-2/3">
+    <div class="p-5">
+      <div class="text-center grid grid-cols-5">
+        <p class="col-start-2 col-end-5 font-semibold text-3xl border-b dark:border-gray-500 border-gray-300 pb-3">This is the new homepage!</p>
+      </div>
+      <a href={% url "product:detail" %}>Product detail page.</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

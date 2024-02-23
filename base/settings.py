@@ -124,6 +124,7 @@ INSTALLED_APPS = [
 
     # Added modules
     "core",
+    "product",
 
     # Installed apps, extra
 ]
