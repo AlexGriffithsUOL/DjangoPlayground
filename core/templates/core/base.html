@@ -2,9 +2,7 @@
 {% load static %}
 <html>
     <head>
-        <script 
-        src=" https://cdn.jsdelivr.net/npm/tw-elements@1.1.0/dist/js/tw-elements.umd.min.js ">
-      </script>
+        <script src="{% static 'js/test.js' %}"></script>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,12 +17,12 @@
               } 
         </script>
         <script src="https://cdn.tailwindcss.com"></script>
-        
+
         <title>{% block title %}{% endblock%} @ TLGH</title>
     </head>
 
     <body class="bg-gray-300 dark:bg-gray-800">
-      <nav class="bg-gray-300 mx-auto p-8 dark:bg-gray-800 dark:text-white text-black z-50"></nav>
+      <nav class="bg-gray-300 mx-auto p-8 dark:bg-gray-800 dark:text-white text-black z-0"></nav>
       {% comment %} <nav class="bg-white border-gray-200 dark:bg-gray-900 fixed top-0 w-full shadow-xl backdrop-blur-2xl"> {% endcomment %}
         <nav class="border-gray-200 fixed top-0 w-full shadow-xl backdrop-blur-2xl">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
